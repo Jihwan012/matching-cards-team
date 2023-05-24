@@ -26,8 +26,11 @@ public class InGameScene extends JPanel {
     private CardButton selectedCard;
     private boolean isChecking;
     private long startTime;
+    
+    private Main main;
 
     public InGameScene(Main main, int difficulty) {
+        this.main=main;
         this.row = this.ROWS[difficulty];
         this.column = this.COLUMNS[difficulty];
         this.totalPairs = (this.row * this.column) / 2;
