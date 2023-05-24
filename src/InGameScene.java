@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Random;
 
 public class InGameScene extends JPanel {
+    private int difficulty;
+    private Main main;
     public static final int EASY = 0;
     public static final int NORMAL = 1;
     public static final int HARD = 2;
@@ -28,10 +30,11 @@ public class InGameScene extends JPanel {
     private long startTime;
 
     public InGameScene(Main main, int difficulty) {
+        this.main = main;
+        this.difficulty = difficulty;
         this.row = this.ROWS[difficulty];
         this.column = this.COLUMNS[difficulty];
         this.totalPairs = (this.row * this.column) / 2;
-
 
         List<Integer> selectedImages = selectRandomImages();
 
@@ -183,11 +186,15 @@ public class InGameScene extends JPanel {
 
                     if (totalMatches == totalPairs) {
                         // 모든 짝을 다 맞춤
-                        JOptionPane.showMessageDialog(null, "축하합니다!");
-                        SwingUtilities.getWindowAncestor(InGameScene.this).dispose();
-                        System.exit(0);
-                    }
 
+                        // GameOverScene으로 이동
+                        main.setGameOverScene(difficulty);
+                        Window window = SwingUtilities.getWindowAncestor(InGameScene.this);
+                        if (window != null) {
+                            window.dispose();
+                            System.exit(0);
+                        }
+                    }
                     selectedCard = null;
                     isChecking = false;
                 } else {
@@ -222,7 +229,7 @@ class CardButton extends JButton {
         this.isMatched = false;
 
         setPreferredSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
-        setBackImage(new ImageIcon("buttonImages/back.png"));
+        setBackImage(new ImageIcon("src/buttonImages/back.png"));
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -244,7 +251,7 @@ class CardButton extends JButton {
     }
 
     public void showImage() {
-        ImageIcon imageIcon = new ImageIcon("buttonImages/" + imageId + ".png");
+        ImageIcon imageIcon = new ImageIcon("src/buttonImages/" + imageId + ".png");
         Image image = imageIcon.getImage().getScaledInstance(CARD_WIDTH, CARD_HEIGHT, Image.SCALE_SMOOTH);
         setIcon(new ImageIcon(image));
     }
@@ -266,5 +273,3 @@ class CardButton extends JButton {
         return new ImageIcon(resizedImage);
     }
 }
-
-
