@@ -189,6 +189,9 @@ public class InGameScene extends JPanel {
                         JOptionPane.showMessageDialog(null, "축하합니다!");
                         SwingUtilities.getWindowAncestor(InGameScene.this).dispose();
                         System.exit(0);
+                        // 2차 피드백-6번
+                        // 이부분에서 int time을 GameOver에게 전달해야 합니다.
+                        // system.out.println(time)으로 기록한 시간이 터미널에 출력될 수 있도록 해주세요
                     }
 
                     selectedCard = null;
